@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codificador de Texto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        textarea {
+            width: 80%;
+            margin: 10px 0;
+            padding: 10px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Codificador e Decodificador de Texto</h1>
+    <p>Digite sua frase:</p>
+
+    <!-- Campo de entrada -->
+    <textarea id="inputText" rows="4" placeholder="Digite aqui..."></textarea>
+    <br>
+
+    <!-- Botões -->
+    <button onclick="codificar()">Codificar</button>
+    <button onclick="decodificar()">Decodificar</button>
+    <br><br>
+
+    <!-- Resultado -->
+    <p><strong>Resultado:</strong></p>
+    <textarea id="outputText" rows="4" readonly></textarea>
+
+    <script>
+        // Mapeamento de substituição
+        const mapaCodificacao = {
+            a: 'q', b: 'w', c: 'e', d: 'r', e: 't', f: 'y', g: 'u', h: 'i', 
+            i: 'o', j: 'p', k: 'a', l: 's', m: 'd', n: 'f', o: 'g', p: 'h', 
+            q: 'j', r: 'k', s: 'l', t: 'z', u: 'x', v: 'c', w: 'v', x: 'b', 
+            y: 'n', z: 'm'
+        };
+
+        const mapaDecodificacao = Object.fromEntries(
+            Object.entries(mapaCodificacao).map(([letra, substituta]) => [substituta, letra])
+        );
+
+        // Função para codificar texto
+        function codificar() {
+            const texto = document.getElementById('inputText').value.toLowerCase();
+            let codificado = '';
+
+            for (let char of texto) {
+                if (mapaCodificacao[char]) {
+                    codificado += mapaCodificacao[char];
+                } else {
+                    codificado += char; // Mantém espaços e pontuação
+                }
+            }
+
+            document.getElementById('outputText').value = codificado;
+        }
+
+        // Função para decodificar texto
+        function decodificar() {
+            const texto = document.getElementById('inputText').value.toLowerCase();
+            let decodificado = '';
+
+            for (let char of texto) {
+                if (mapaDecodificacao[char]) {
+                    decodificado += mapaDecodificacao[char];
+                } else {
+                    decodificado += char; // Mantém espaços e pontuação
+                }
+            }
+
+            document.getElementById('outputText').value = decodificado;
+        }
+    </script>
+</body>
+</html>
